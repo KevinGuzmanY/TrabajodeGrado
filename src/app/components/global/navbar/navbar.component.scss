@@ -1,0 +1,27 @@
+.field{
+  border-radius: 103px;
+  width: 90%;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  backdrop-filter: blur(14px);
+}
+
+.search-container {
+  width: 90%;
+  text-align: left;
+  padding-top: 4rem; /* Agrega un poco de espaciado */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+  position: relative; /* Necesario para posicionar el icono dentro del input */
+}
+.search-label {
+  font-size: 18px; /* Tamaño del texto */
+  color: white; /* Color del texto */
+  margin-bottom: 10px; /* Espacio entre el texto y el input */
+}
+.tittle{
+  padding-bottom: 10px;
+}

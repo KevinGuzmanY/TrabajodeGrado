@@ -1,0 +1,9 @@
+@import '../src/assets/css/global.scss';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+span{
+  font-size: 18px; /* Cambia el tamaño de fuente */
+  font-weight: 500;
+}
+
