@@ -6,13 +6,13 @@
 </app-carousel>
 
 <mat-tab-group>
-  <mat-tab label="Contenido Nuevo">
-    <app-carousel [title]="'Contenido Nuevo'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+  <mat-tab label="Popular">
+    <app-carousel [title]="'Popular'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
                   [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
-  <mat-tab label="Popular">
-    <app-carousel [title]="'Popular'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+  <mat-tab label="Contenido Nuevo">
+    <app-carousel [title]="'Nuevo'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
                   [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
@@ -30,30 +30,34 @@
 <app-slider [data]="movies_data"></app-slider>
 
 <mat-tab-group>
-  <mat-tab label="Genero1">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <app-carousel [title]="'Filtrar por Género'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                    [items]="filteredMovies" [canNavigateLeft]="true" [canNavigateRight]="true">
-      </app-carousel>
-
+  <mat-tab label="Elije por Genero">
+    <div class="filterDiv" style="margin-inline: 5rem">
       <!-- Filtro por Género -->
       <mat-form-field appearance="fill">
-        <mat-label>Filtrar por Género</mat-label>
+        <mat-label>Elije Género</mat-label>
         <mat-select (selectionChange)="onGenreSelected($event.value)">
           <mat-option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+
+      <app-carousel [title]="'Género'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+                    [items]="filteredGenre" [canNavigateLeft]="true" [canNavigateRight]="true">
+      </app-carousel>
   </mat-tab>
 
-  <mat-tab label="Genero">
-    <app-carousel [title]="'Filtrar por Genero'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
-    </app-carousel>
-  </mat-tab>
-  <mat-tab label="Tipo">
-    <app-carousel [title]="'Filtrar por Tipo'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+  <mat-tab label="Elije por Tipo">
+    <div class="filterDiv" style="margin-inline: 5rem">
+      <!-- Filtro por Género -->
+      <mat-form-field appearance="fill">
+        <mat-label>Elije Tipo</mat-label>
+        <mat-select (selectionChange)="onTipoSelected($event.value)">
+          <mat-option *ngFor="let tip of tipo" [value]="tip">{{ tip }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <app-carousel [title]="'Tipo'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+                  [items]="filteredTipo" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
 </mat-tab-group>

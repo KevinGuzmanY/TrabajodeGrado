@@ -19,6 +19,25 @@ export class ApiService {
     return of(arrayDeStrings);
   }
 
+  getContentByTipo(tipo: string){
+    let page = 1;
+
+    if (tipo == 'Pelicula'){
+      const url = `${this.apiUrl}/discover/movie?api_key=${this.apiKey}&page=${page}`;
+      return this.http.get(url);
+    }else {
+      const url = `${this.apiUrl}/discover/tv?api_key=${this.apiKey}&page=${page}`;
+      return this.http.get(url);
+    }
+  }
+
+  getContentByGenre(genre: number){
+    let page = 1
+      const params = this.buildParams({ page: page.toString() });
+    return this.http.get(`${this.apiUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genre}&language=en-US&page=1`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
   getNowPlaying(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
     return this.http.get(`${this.apiUrl}/${mediaType}/now_playing`, { params })
