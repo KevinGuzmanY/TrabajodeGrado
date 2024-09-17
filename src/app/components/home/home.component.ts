@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   movies_data: any[] = [];
   filteredGenre: any[] = [];
   filteredTipo: any[] = [];
+  topRated: any[] = [];
+
   tipo: string[] = ['Pelicula','Serie']
   genres: { id: number, name: string }[] = [
     { id: 28, name: 'Accion' },
@@ -42,6 +44,7 @@ export class HomeComponent implements OnInit {
     this.fetchTrendingContent('movie', 1, 'movies');
     this.fetchTrendingContent('tv', 1, 'tvShows');
     this.getNowPlaying('movie', 1);
+    this.getTopRated('movie', 1);
     setTimeout(() => {
       this.spinner.hide();
     }, 2000);
@@ -87,6 +90,37 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  getTopRated(mediaType: 'movie', page: number) {
+    this.apiService.getTopRated(mediaType, page).pipe(delay(2000)).subscribe(
+      (res: any) => {
+        this.topRated = res.results.map((item: any) => {
+          const movieItem = {
+            ...item,
+            link: `/movie/${item.id}`,
+            videoId: '' // Initialize with an empty string
+          };
+
+          // Fetch the trailer video key for each movie
+          this.apiService.getYouTubeVideo(item.id, 'movie').subscribe(
+            (videoRes: any) => {
+              const video = videoRes.results.find((vid: any) => vid.site === 'YouTube' && vid.type === 'Trailer');
+              if (video) {
+                movieItem.videoId = video.key; // Set the video key if available
+              }
+            },
+            videoError => {
+              console.error('Error fetching YouTube video for Movie:', videoError);
+            }
+          );
+
+          return movieItem;
+        });
+      },
+      error => {
+        console.error('Error fetching now playing data', error);
+      }
+    );
+  }
   // Slider Data
   getNowPlaying(mediaType: 'movie', page: number) {
   this.apiService.getNowPlaying(mediaType, page).pipe(delay(2000)).subscribe(

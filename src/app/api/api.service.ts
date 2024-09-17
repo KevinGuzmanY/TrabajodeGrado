@@ -38,6 +38,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  getTopRated(mediaType: string, page: number): Observable<any> {
+    const params = this.buildParams({ page: page.toString() });
+    return this.http.get(`${this.apiUrl}/${mediaType}/top_rated?&page=${page}`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
   getNowPlaying(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
     return this.http.get(`${this.apiUrl}/${mediaType}/now_playing`, { params })
@@ -77,7 +83,7 @@ export class ApiService {
 
   getTrending(media: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`${this.apiUrl}/trending/${media}/week`, { params })
+    return this.http.get(`http://localhost:5000/trending/${media}/week`, { params })
       .pipe(catchError(this.handleError));
   }
 

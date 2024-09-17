@@ -8,7 +8,7 @@
 <mat-tab-group>
   <mat-tab label="Popular">
     <app-carousel [title]="'Popular'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+                  [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
   <mat-tab label="Contenido Nuevo">
@@ -18,16 +18,16 @@
   </mat-tab>
   <mat-tab label="Mejor Calificado">
     <app-carousel [title]="'Mejor Calificado'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+                  [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
 </mat-tab-group>
 
-<app-carousel [title]="'Popular Movies'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+<app-carousel [title]="'Peliculas Populares'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
     [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
 </app-carousel>
 
-<app-slider [data]="movies_data"></app-slider>
+<app-slider [data]="topRated"></app-slider>
 
 <mat-tab-group>
   <mat-tab label="Elije por Genero">
@@ -62,6 +62,6 @@
   </mat-tab>
 </mat-tab-group>
 
-<app-carousel [title]="'Popular TV Shows'" [isExplore]="false" [exploreLink]="'/tv/category/airing_today'"
+<app-carousel [title]="'Series Populares'" [isExplore]="false" [exploreLink]="'/tv/category/airing_today'"
     [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
 </app-carousel>
