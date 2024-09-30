@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { delay } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +17,7 @@ export class HomeComponent implements OnInit {
   filteredGenre: any[] = [];
   filteredTipo: any[] = [];
   topRated: any[] = [];
+  hasReloaded: string = "false";
 
   tipo: string[] = ['Pelicula','Serie']
   genres: { id: number, name: string }[] = [
@@ -36,7 +39,8 @@ export class HomeComponent implements OnInit {
     { id: 10752, name: 'Guerra' }
   ];
 
-  constructor(private apiService: ApiService, private spinner: NgxSpinnerService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,private apiService: ApiService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
@@ -48,6 +52,19 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 2000);
+
+    this.hasReloaded = sessionStorage.getItem('hasReloaded') || "false";
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params["signedIn"] !== undefined && params["signedIn"] === "true") {
+        this.toastr.success("Logueado con éxito");
+        // Verifica si la página ya se ha recargado
+        if (!sessionStorage.getItem('hasReloaded')) {
+          sessionStorage.setItem('hasReloaded', 'true'); // Marca que la página ya se recargó
+          location.reload(); // Recarga la página
+        }
+      }
+    })
   }
 
   // Handle Genre Selection

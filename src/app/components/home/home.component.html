@@ -1,7 +1,11 @@
 <div id="margindiv">
 </div>
 
-<app-carousel [title]="'Recomendado por IA'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+<div *ngIf="hasReloaded != 'true'" id="loginRecommendation" style="font-size: medium">
+  <p>Se recomienda que se loguee para recibir recomendaciones personalizadas por IA.</p>
+</div>
+
+<app-carousel *ngIf="hasReloaded == 'true'" [title]="'Recomendado por IA'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
               [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
 </app-carousel>
 

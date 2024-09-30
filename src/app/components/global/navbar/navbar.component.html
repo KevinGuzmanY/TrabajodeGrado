@@ -34,6 +34,26 @@
         </svg>
       </a>
     </li>
+
+    <li *ngIf="!loggedIn">
+      <!--      <a [routerLink]="['/tv']" aria-label="TV Shows">-->
+      <a [routerLink]="['/registro']" aria-label="Registrarse">
+        <img src="https://mohistory.org/img/event-icons/registration-white.png" style="width: 24px;height: 24px">
+      </a>
+    </li>
+
+    <li *ngIf="!loggedIn">
+      <a [routerLink]="['/login']" aria-label="login">
+        <img src="https://img.icons8.com/fluent-systems-filled/512/FFFFFF/home.png" style="width: 24px;height: 24px">
+      </a>
+    </li>
+
+    <li (click)="logOut()" *ngIf="loggedIn">
+      <a [routerLink]="['/home']" aria-label="salir">
+        <img src="https://static-00.iconduck.com/assets.00/logout-icon-2048x2046-yqonjwjv.png" style="width: 24px;height: 24px">
+      </a>
+    </li>
+
     <li style="display: none">
       <button class="search-toggle" type="button" aria-label="Search" (click)="toggleSearch()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -44,6 +64,7 @@
         </svg>
       </button>
     </li>
+
   </ul>
 </nav>
 

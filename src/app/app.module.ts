@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +52,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -92,6 +95,8 @@ import {MatOption, MatSelect} from "@angular/material/select";
     EpisodesComponent,
     ModalComponent,
     SafeUrlPipe,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +112,14 @@ import {MatOption, MatSelect} from "@angular/material/select";
     MatLabel,
     MatSelect,
     MatOption,
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Duración del mensaje
+      positionClass: 'toast-top-right', // Posición del mensaje
+      preventDuplicates: true, // Evita mensajes duplicados
+    }),
+    NgOptimizedImage,
+
   ],
   providers: [
     provideAnimationsAsync()

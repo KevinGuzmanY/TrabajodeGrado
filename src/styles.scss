@@ -7,3 +7,21 @@ span{
   font-weight: 500;
 }
 
+.mat-mdc-text-field-wrapper{
+  background-color: white;
+}
+
+.mdc-text-field
+{
+  background-color: white;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: inherit !important;
+  border: 2px solid white;
+}
+/*Manipulate background color on hover and focus*/
+.mat-mdc-form-field-focus-overlay {
+  background-color: inherit !important;
+  border: 2px solid white;
+}

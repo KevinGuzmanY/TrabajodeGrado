@@ -9,11 +9,25 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   searchVisible = false;
   query: string = '';
+  loggedIn: boolean = false;
 
   @ViewChild('input') inputElement!: ElementRef;
 
   constructor(private router: Router) {
     this.searchVisible = true
+  }
+
+  ngOnInit() {
+    if (localStorage.getItem("isLoggedIn") == "true"){
+      this.loggedIn = true
+    }
+  }
+
+  logOut(){
+    this.loggedIn = false
+    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem('hasReloaded');
+    window.location.reload();
   }
 
   ngAfterViewInit(): void {

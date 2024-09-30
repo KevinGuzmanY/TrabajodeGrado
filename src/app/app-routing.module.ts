@@ -10,6 +10,8 @@ import { MovieCategoryComponent } from './components/movie-category/movie-catego
 import { TvCategoryComponent } from './components/tv-category/tv-category.component';
 import { GenreComponent } from './components/genre/genre.component';
 import { SearchComponent } from './components/global/search/search.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
@@ -36,13 +38,13 @@ const routes: Routes = [
     path: 'person/:id',
     component: PersonComponent,
   },
-  { 
-    path: 'movie/category/:category', 
-    component: MovieCategoryComponent 
+  {
+    path: 'movie/category/:category',
+    component: MovieCategoryComponent,
   },
-  { 
-    path: 'tv/category/:category', 
-    component: TvCategoryComponent 
+  {
+    path: 'tv/category/:category',
+    component: TvCategoryComponent
   },
   {
     path: 'genres/:id/:type',
@@ -55,6 +57,14 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent
+  },
+  {
+    path: 'registro',
+    component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '**',
