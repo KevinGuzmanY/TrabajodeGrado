@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   moviesSlider: any[] = [];
   tvSlider: any[] = [];
   movies_data: any[] = [];
+  IA_recomended: any[] = [];
   filteredGenre: any[] = [];
   filteredTipo: any[] = [];
   topRated: any[] = [];
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.fetchTrendingContent('movie', 1, 'movies');
+    this.fetchIAContent();
     this.fetchTrendingContent('tv', 1, 'tvShows');
     this.getNowPlaying('movie', 1);
     this.getTopRated('movie', 1);
@@ -71,6 +73,7 @@ export class HomeComponent implements OnInit {
   onGenreSelected(genreId: number) {
     this.apiService.getContentByGenre(genreId).pipe(delay(2000)).subscribe(
       (res: any) => {
+          console.log('getContentByGenre' )
           this.filteredGenre = res.results.map((item: any) => ({
             link: `/movie/${item.id}`,
             imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
@@ -173,7 +176,46 @@ export class HomeComponent implements OnInit {
   performSearch() {
     alert('Buscar...');
   }
-  fetchTrendingContent(media: string, page: number, type: string): void {
+
+  fetchIAContent(): void {
+    if (sessionStorage.getItem("hasReloaded") == "true"){
+
+      let userid = localStorage.getItem("user_id");
+
+      if (userid !== null) {
+        this.apiService.getIA(userid).subscribe(
+          response => {
+            const unifiedArray = response.flatMap((dict: any) => {
+              return dict.content[0].results.slice(0, 2).map((item: any) => {
+                return {
+                  link: `/movie/${item.id}`,
+                  imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+                  title: item.title,
+                  rating: item.vote_average * 10,
+                  vote: item.vote_average
+                };
+              });
+            });
+            this.IA_recomended = unifiedArray
+            console.log(this.IA_recomended)
+            //
+            // this.filteredGenre = response.map((item: any) => {
+            //   return {
+            //     link: `/movie/${item.id}`,
+            //     imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+            //     title: item.title,
+            //     rating: item.vote_average * 10,
+            //     vote: item.vote_average
+            //   }});
+          }
+        );
+      } else {
+        console.error("User ID not found in localStorage");
+      }
+    }
+  }
+
+    fetchTrendingContent(media: string, page: number, type: string): void {
     this.apiService.getTrending(media, page).subscribe(
       response => {
         if (type === 'movies') {
@@ -193,13 +235,16 @@ export class HomeComponent implements OnInit {
             vote: item.vote_average
           }));
 
-          this.moviesSlider = response.results.map((item: any) => ({
-            link: `/movie/${item.id}`,
-            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
-            title: item.title,
-            rating: item.vote_average * 10,
-            vote: item.vote_average
-          }));
+          if (this.hasReloaded == "false"){
+            this.moviesSlider = response.results.map((item: any) => ({
+              link: `/movie/${item.id}`,
+              imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+              title: item.title,
+              rating: item.vote_average * 10,
+              vote: item.vote_average
+            }));
+          }
+
         } else if (type === 'tvShows') {
           this.tvSlider = response.results.map((item: any) => ({
             link: `/tv/${item.id}`,

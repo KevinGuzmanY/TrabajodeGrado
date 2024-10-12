@@ -1,0 +1,113 @@
+<div id="margindivregister">
+</div>
+
+<div id="imagenregister">
+</div>
+
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="signUp()">
+
+    <div class="formfield">
+      <label>Nombre de usuario</label>
+      <span *ngIf="!form.get('username')?.valid && form.get('username')?.touched" style="color:red ;"> Ingresa el usuario</span>
+      <div>
+        <input  [formControlName]="'username'" type="text" required>
+      </div>
+    </div>
+
+    <div class="formfield">
+      <label>Correo</label>
+      <span *ngIf="!form.get('email')?.valid && form.get('email')?.touched" style="color:red ;"> Ingrese el Correo</span>
+      <div>
+        <input  [formControlName]="'email'" type="email" required>
+      </div>
+    </div>
+
+    <div class="formfield" style="padding-bottom: 3rem;">
+      <label>Contraseña </label>
+      <span *ngIf="!form.get('password')?.valid && form.get('password')?.touched" style="color:red ;">La contraseña debe tener mas de 6 caracteres</span>
+      <div>
+        <input  [formControlName]="'password'" type="password">
+      </div>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white; font-size: large">¿Selecciona tu sexo?</mat-label>
+      <mat-select formControlName="genre">
+        <mat-option value="Hombre">Hombre</mat-option>
+        <mat-option value="Mujer">Mujer</mat-option>
+        <mat-option value="no">Prefiero no decirlo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white; font-size: large">Selecciona tu país</mat-label>
+      <mat-select formControlName="country">
+        <mat-option *ngFor="let country of countries" [value]="country.code">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="formfield">
+      <label>Edad</label>
+      <span *ngIf="!form.get('age')?.valid && form.get('age')?.touched" style="color:red ;">Ingrese su edad</span>
+      <div>
+        <input  [formControlName]="'age'" type="number" required>
+      </div>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white; font-size: large">Con qué frecuencía vez películas o series?</mat-label>
+      <mat-select formControlName="frecuenciavisualizacion">
+        <mat-option value="1">Más de 1 vez a la semana</mat-option>
+        <mat-option value="3">Más de 3 veces a la semana</mat-option>
+        <mat-option value="5">5 o mas veces a la semana</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white; font-size: large">¿Qué genero de series o películas disfrutas más?</mat-label>
+      <mat-select formControlName="generofavorito" multiple>
+        <mat-option value="accion">Acción</mat-option>
+        <mat-option value="aventura">Aventura</mat-option>
+        <mat-option value="animacion">Animación</mat-option>
+        <mat-option value="comedia">Comedia</mat-option>
+        <mat-option value="crimen">Crimen</mat-option>
+        <mat-option value="documental">Documental</mat-option>
+        <mat-option value="drama">Drama</mat-option>
+        <mat-option value="familiar">Familiar</mat-option>
+        <mat-option value="fantasia">Fantasía</mat-option>
+        <mat-option value="historia">Historia</mat-option>
+        <mat-option value="horror">Horror</mat-option>
+        <mat-option value="musica">Música</mat-option>
+        <mat-option value="misterio">Misterio</mat-option>
+        <mat-option value="romance">Romance</mat-option>
+        <mat-option value="cienciaFiccion">Ciencia Ficción</mat-option>
+        <mat-option value="guerra">Guerra</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: white; font-size: large">¿Cuales son tus plataformas de streaming favoritas?</mat-label>
+      <mat-select formControlName="plataformasfavoritas" multiple>
+        <mat-option value="netflix">Netflix</mat-option>
+        <mat-option value="amazon">Amazon Prime Video</mat-option>
+        <mat-option value="disney">Disney+</mat-option>
+        <mat-option value="HBO">HBO Max</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="formfield">
+      <label>¿Cuál es tu actor favorito?</label>
+      <span *ngIf="!form.get('actorfavorito')?.valid && form.get('actorfavorito')?.touched" style="color:red ;">Ingresa el actor</span>
+      <div>
+        <input  [formControlName]="'actorfavorito'" type="text" required>
+      </div>
+    </div>
+
+    <div class="buttondiv">
+      <input type="submit" value="Registrarse">
+    </div>
+  </form>
+</div>

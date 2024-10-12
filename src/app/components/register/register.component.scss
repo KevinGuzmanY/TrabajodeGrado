@@ -1,0 +1,69 @@
+
+#margindivregister{
+  padding-top: 22rem;
+}
+
+body, html{
+  height: 100vh;
+
+}
+
+.formfield{
+  padding-block: 1rem;
+  padding-inline: 8%;
+}
+.container{
+  text-align: center;
+}
+
+.buttondiv{
+  text-align: center;
+}
+
+input[type=number],input[type=text], input[type=email], input[type=password], select, textarea {
+  width: 76%;
+  padding: 18px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: inherit;
+  color: white;
+  resize: vertical;
+}
+input[type="submit"] {
+  background-color: darkblue;
+  color: white;
+  padding: 2rem;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+#imagenregister{
+  background-image: url('../../../assets/imgRegister.png');
+  background-size: contain;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 30rem;
+}
+
+mat-form-field{
+  padding-inline: 8%;
+  width: 80%;
+  padding-block: 2rem;
+}
+
+body > app-root > div > app-register > div.container > form > mat-form-field > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+  background-color: black;
+}
+
+.container{
+  font-size: large;
+}
+
+label{
+  font-size: large;
+}

@@ -1,0 +1,28 @@
+<div id="margindivregister">
+</div>
+
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="signIn()">
+    <div id="imagenlogin">
+    </div>
+
+    <div class="inputdiv">
+      <label >Nombre de usuario</label>
+      <div>
+        <span *ngIf="!form.get('username')?.valid && form.get('username')?.touched" style="color:red ;">Ingrese su usuario</span>
+        <input  [formControlName]="'username'" type="text">
+      </div>
+    </div>
+    <div  class="inputdiv">
+      <label>Contraseña</label>
+      <div>
+        <span *ngIf="!form.get('password')?.valid && form.get('password')?.touched" style="color:red ;">Ingrese la contraseña</span>
+        <input  [formControlName]="'password'" type="password">
+      </div>
+    </div>
+    <input type="submit" value="Ingresar">
+    <div>
+      <p><a href="/registro">Registrarse</a></p>
+    </div>
+  </form>
+</div>

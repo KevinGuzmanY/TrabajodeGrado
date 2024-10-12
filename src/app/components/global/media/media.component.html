@@ -22,34 +22,34 @@
         <!-- Person -->
         <ul class="nolist" *ngIf="type === 'person'">
             <li *ngIf="data?.known_for_department">
-                <div class="label">Known For</div>
+                <div class="label">Conocido/a por</div>
                 <div class="value">{{ data?.known_for_department }}</div>
             </li>
             <li *ngIf="data?.birthday | date">
-                <div class="label">Born</div>
+                <div class="label">Fecha de Nacimiento</div>
                 <div class="value">{{ data?.birthday | date }}</div>
             </li>
             <li *ngIf="data?.place_of_birth">
-                <div class="label">Place of Birth</div>
+                <div class="label">Lugar de Nacimiento</div>
                 <div class="value">{{ data?.place_of_birth }}</div>
             </li>
         </ul>
         <ul class="nolist" *ngIf="type === 'movie'">
             <li *ngIf="data?.release_date | date">
-                <div class="label">Released</div>
+                <div class="label">Lanzamiento</div>
                 <div class="value">{{ data?.release_date | date }}</div>
             </li>
 
             <li *ngIf="data?.runtime | time">
-                <div class="label">Runtime</div>
+                <div class="label">Duracion</div>
                 <div class="value">{{ data?.runtime | time }}</div>
             </li>
             <li *ngIf="data?.budget">
-                <div class="label">Budget</div>
+                <div class="label">Fortuna</div>
                 <div class="value">${{ data?.budget | numberWithCommas }}</div>
             </li>
             <li *ngIf="data?.revenue">
-                <div class="label">Revenue</div>
+                <div class="label">Ganancia</div>
                 <div class="value">${{ data?.revenue | numberWithCommas }}</div>
             </li>
             <li *ngIf="data?.genres.length">
@@ -107,7 +107,7 @@
                 <div class="label">language</div>
                 <div class="value">{{ data?.languages | languageName }}</div>
             </li>
-    
+
         </ul>
 
 

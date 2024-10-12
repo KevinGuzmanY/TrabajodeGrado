@@ -42,7 +42,7 @@
               "@angular/material/prebuilt-themes/cyan-orange.css",
               "node_modules/ngx-spinner/animations/ball-triangle-path.css",
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
             ],
             "scripts": []
           },

@@ -16,6 +16,13 @@ span{
   background-color: white;
 }
 
+::ng-deep .toast-top-right .toast-container .toast-success {
+  font-size: large; /* You can also target success messages specifically */
+}
+#toast-container{
+  font-size: large;
+}
+
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: inherit !important;
   border: 2px solid white;

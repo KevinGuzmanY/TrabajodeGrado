@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
 export class ApiService {
   private apiUrl = 'https://api.themoviedb.org/3';
   private apiKey = 'bbf9e364cea80ea7037b2df19efcad88'; // your API key
-  private language = 'en-US';
+  private language = 'es-ES';
 
 
   constructor(private http: HttpClient) { }
@@ -34,7 +34,7 @@ export class ApiService {
   getContentByGenre(genre: number){
     let page = 1
       const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`${this.apiUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genre}&language=en-US&page=1`, { params })
+    return this.http.get(`http://localhost:5000/content/genre/${genre}`, { params })
       .pipe(catchError(this.handleError));
   }
 
@@ -78,6 +78,11 @@ export class ApiService {
   getYouTubeVideo(id: number, mediaType: string): Observable<any> {
     const params = this.buildParams({});
     return this.http.get(`${this.apiUrl}/${mediaType}/${id}/videos`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getIA(userid: string): Observable<any> {
+    return this.http.get(`http://localhost:5000/recommendations/${userid}`)
       .pipe(catchError(this.handleError));
   }
 
