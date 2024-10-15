@@ -47,6 +47,7 @@ export class MoviesInfoComponent implements OnInit {
   getMovieInfo(id: number) {
     this.apiService.getMovie(id).subscribe((result: any) => {
       this.movie_data = result;
+      this.getWatchProviders(id, 'movie');
 
       // Fetch YouTube trailer video
       this.apiService.getYouTubeVideo(id, 'movie').subscribe(
@@ -63,8 +64,22 @@ export class MoviesInfoComponent implements OnInit {
         }
       );
 
+      console.log(this.movie_data)
       this.getExternal(id);
     });
+  }
+
+  getWatchProviders(id: number, media_type: string): void {
+    this.apiService.getWatchProviders(id, media_type).subscribe(
+      platformsData => {
+        this.movie_data.platforms = platformsData.results.CO;
+        console.log("movie_data")
+        console.log(this.movie_data)
+      },
+      error => {
+        console.error('Error fetching watch providers:', error);
+      }
+    );
   }
 
   getExternal(id: number) {

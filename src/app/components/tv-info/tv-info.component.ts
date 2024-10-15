@@ -58,7 +58,8 @@ export class TvInfoComponent implements OnInit {
     this.apiService.getWatchProviders(id, media_type).subscribe(
       platformsData => {
         this.tv_data.platforms = platformsData.results.CO;
-        console.log(this.tv_data.platforms)
+        console.log("tv_data")
+        console.log(this.tv_data)
       },
       error => {
         console.error('Error fetching watch providers:', error);
