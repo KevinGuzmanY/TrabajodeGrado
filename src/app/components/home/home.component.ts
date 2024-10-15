@@ -197,6 +197,7 @@ export class HomeComponent implements OnInit {
               });
             });
             this.IA_recomended = unifiedArray
+            console.log("IA_recomended")
             console.log(this.IA_recomended)
             //
             // this.filteredGenre = response.map((item: any) => {

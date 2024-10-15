@@ -46,6 +46,14 @@ export class TvInfoComponent implements OnInit {
       tv_data => {
         this.tv_data = tv_data;
         this.getWatchProviders(id, 'tv');
+
+        // Extraer los géneros de la respuesta
+        const genres = tv_data.genres.map((genre: { id: number, name: string }) => genre.name.toLowerCase());
+
+        // Llamar a la función para actualizar los géneros del usuario
+        this.updateUserGenres(genres);
+        console.log("getTvInfo")
+        console.log(tv_data)
       },
       error => {
         console.error('Error fetching TV show details:', error);
@@ -80,6 +88,29 @@ export class TvInfoComponent implements OnInit {
       this.filteredVideos = this.videos;
       this.videoTypes = ['ALL', ...new Set(this.videos.map(video => video.type))];
     });
+  }
+
+  updateUserGenres(genres: string[]) {
+    const userId = this.getCurrentUserId();  // Asume que tienes una forma de obtener el user_id
+
+    const data = {
+      user_id: userId,
+      genres: genres
+    };
+
+    this.apiService.updateUserPreferences(data).subscribe(
+      response => {
+        console.log('Preferencias de usuario actualizadas:', response);
+      },
+      error => {
+        console.error('Error al actualizar las preferencias del usuario:', error);
+      }
+    );
+  }
+
+  getCurrentUserId(): number {
+    // Obtén el ID del usuario actual desde tu sistema de autenticación (ej: localStorage, sesión, etc.)
+    return Number(localStorage.getItem('user_id'));
   }
 
   filterVideos(event: Event): void {

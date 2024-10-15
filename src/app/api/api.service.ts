@@ -19,6 +19,10 @@ export class ApiService {
     return of(arrayDeStrings);
   }
 
+  updateUserPreferences(data: any): Observable<any> {
+    return this.http.post<any>('http://localhost:5000/update_user_preferences', data);
+  }
+
   getContentByTipo(tipo: string){
     let page = 1;
 
