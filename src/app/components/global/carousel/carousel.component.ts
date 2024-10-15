@@ -42,6 +42,9 @@ export class CarouselComponent implements AfterViewInit, OnChanges, OnDestroy {
     window.addEventListener('resize', this.updateNavigation.bind(this));
   }
 
+  ngOnInit(){
+  }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.resetCarousel();

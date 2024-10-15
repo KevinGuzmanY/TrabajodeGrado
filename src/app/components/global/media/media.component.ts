@@ -9,4 +9,8 @@ export class MediaComponent {
   @Input() data: any;
   @Input() externalData: any;
   @Input() type: 'movie' | 'tv' | 'person' = 'movie';
+
+  ngOnInit(){
+    console.log("data"+this.externalData)
+  }
 }

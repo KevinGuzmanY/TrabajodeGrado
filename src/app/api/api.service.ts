@@ -31,6 +31,11 @@ export class ApiService {
     }
   }
 
+  getWatchProviders(contentId: number, mediaType: string): Observable<any> {
+    const url = `${this.apiUrl}/${mediaType}/${contentId}/watch/providers?api_key=${this.apiKey}`;
+    return this.http.get<any>(url);
+  }
+
   getContentByGenre(genre: number){
     let page = 1
       const params = this.buildParams({ page: page.toString() });

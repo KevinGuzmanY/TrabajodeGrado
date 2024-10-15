@@ -235,15 +235,13 @@ export class HomeComponent implements OnInit {
             vote: item.vote_average
           }));
 
-          if (this.hasReloaded == "false"){
-            this.moviesSlider = response.results.map((item: any) => ({
-              link: `/movie/${item.id}`,
-              imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
-              title: item.title,
-              rating: item.vote_average * 10,
-              vote: item.vote_average
-            }));
-          }
+          this.moviesSlider = response.results.map((item: any) => ({
+            link: `/movie/${item.id}`,
+            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+            title: item.title,
+            rating: item.vote_average * 10,
+            vote: item.vote_average
+          }));
 
         } else if (type === 'tvShows') {
           this.tvSlider = response.results.map((item: any) => ({

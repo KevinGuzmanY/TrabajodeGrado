@@ -22,7 +22,7 @@ export class TvInfoComponent implements OnInit {
   cast_data: any;
   recom_data: any[] = [];
   type: 'tv' = 'tv';
-  
+
 
   constructor(private apiService: ApiService, private router: ActivatedRoute, private spinner: NgxSpinnerService) {}
 
@@ -33,7 +33,7 @@ export class TvInfoComponent implements OnInit {
       this.getTvVideos(this.id);
       this.getTvBackdrop(this.id);
       this.getMovieCast(this.id);
-      this.getTvRecommended(this.id, 1); 
+      this.getTvRecommended(this.id, 1);
     });
   }
 
@@ -42,10 +42,28 @@ export class TvInfoComponent implements OnInit {
   }
 
   getTvInfo(id: number) {
-    this.apiService.getTvShow(id).subscribe((result: any) => {
-      this.tv_data = result;
-      this.getExternal(id);
-    });
+    this.apiService.getTvShow(id).subscribe(
+      tv_data => {
+        this.tv_data = tv_data;
+        this.getWatchProviders(id, 'tv');
+      },
+      error => {
+        console.error('Error fetching TV show details:', error);
+      }
+    );
+
+  }
+
+  getWatchProviders(id: number, media_type: string): void {
+    this.apiService.getWatchProviders(id, media_type).subscribe(
+      platformsData => {
+        this.tv_data.platforms = platformsData.results.CO;
+        console.log(this.tv_data.platforms)
+      },
+      error => {
+        console.error('Error fetching watch providers:', error);
+      }
+    );
   }
 
   getExternal(id: number) {
