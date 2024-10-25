@@ -16,9 +16,12 @@ export class HomeComponent implements OnInit {
   movies_data: any[] = [];
   IA_recomended: any[] = [];
   filteredGenre: any[] = [];
+  popularMovies: any[] = [];
+  newMovies: any[] = [];
   filteredTipo: any[] = [];
   topRated: any[] = [];
   hasReloaded: string = "false";
+  slider: any[] = [];
 
   tipo: string[] = ['Pelicula','Serie']
   genres: { id: number, name: string }[] = [
@@ -51,6 +54,10 @@ export class HomeComponent implements OnInit {
     this.fetchTrendingContent('tv', 1, 'tvShows');
     this.getNowPlaying('movie', 1);
     this.getTopRated('movie', 1);
+    this.getSlider('movie', 1);
+    this.fetchMoviesSlider('movie', 2,'movies');
+    this.populateGenre(99);
+
     setTimeout(() => {
       this.spinner.hide();
     }, 2000);
@@ -67,6 +74,25 @@ export class HomeComponent implements OnInit {
         }
       }
     })
+  }
+
+  populateGenre(genreId: number) {
+    this.apiService.getContentByGenre(genreId).pipe(delay(2000)).subscribe(
+      (res: any) => {
+        console.log('getContentByGenre' )
+        this.filteredGenre = res.results.map((item: any) => ({
+          link: `/movie/${item.id}`,
+          imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+          title: item.title,
+          rating: item.vote_average * 10,
+          vote: item.vote_average
+        }));
+      }
+      ,
+      error => {
+        console.error('Error fetching now playing data', error);
+      }
+    );
   }
 
   // Handle Genre Selection
@@ -115,6 +141,41 @@ export class HomeComponent implements OnInit {
       (res: any) => {
         this.topRated = res.results.map((item: any) => {
           const movieItem = {
+            link: `/movie/${item.id}`,
+            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+            title: item.title,
+            rating: item.vote_average * 10,
+            vote: item.vote_average,
+            videoId: ''
+          };
+
+          // Fetch the trailer video key for each movie
+          this.apiService.getYouTubeVideo(item.id, 'movie').subscribe(
+            (videoRes: any) => {
+              const video = videoRes.results.find((vid: any) => vid.site === 'YouTube' && vid.type === 'Trailer');
+              if (video) {
+                movieItem.videoId = video.key; // Set the video key if available
+              }
+            },
+            videoError => {
+              console.error('Error fetching YouTube video for Movie:', videoError);
+            }
+          );
+
+          return movieItem;
+        });
+      },
+      error => {
+        console.error('Error fetching now playing data', error);
+      }
+    );
+  }
+
+  getSlider(mediaType: 'movie', page: number) {
+    this.apiService.getTopRated(mediaType, page).pipe(delay(2000)).subscribe(
+      (res: any) => {
+        this.slider = res.results.map((item: any) => {
+          const movieItem = {
             ...item,
             link: `/movie/${item.id}`,
             videoId: '' // Initialize with an empty string
@@ -141,15 +202,19 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
   // Slider Data
   getNowPlaying(mediaType: 'movie', page: number) {
   this.apiService.getNowPlaying(mediaType, page).pipe(delay(2000)).subscribe(
     (res: any) => {
-      this.movies_data = res.results.map((item: any) => {
+      this.newMovies = res.results.map((item: any) => {
         const movieItem = {
-          ...item,
           link: `/movie/${item.id}`,
-          videoId: '' // Initialize with an empty string
+          imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+          title: item.title,
+          rating: item.vote_average * 10,
+          vote: item.vote_average,
+          videoId: ''
         };
 
         // Fetch the trailer video key for each movie
@@ -216,11 +281,27 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  fetchMoviesSlider(media: string, page: number, type: string): void {
+    this.apiService.getTrending(media, page).subscribe(
+      response => {
+          this.moviesSlider = response.results.map((item: any) => ({
+            link: `/movie/${item.id}`,
+            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+            title: item.title,
+            rating: item.vote_average * 10,
+            vote: item.vote_average
+          }));
+      },
+      error => {
+        console.error(`Error fetching trending ${type}:`, error);
+      }
+    );}
+
     fetchTrendingContent(media: string, page: number, type: string): void {
     this.apiService.getTrending(media, page).subscribe(
       response => {
         if (type === 'movies') {
-          this.filteredGenre = response.results.map((item: any) => ({
+          this.popularMovies = response.results.map((item: any) => ({
             link: `/movie/${item.id}`,
             imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
             title: item.title,
@@ -236,13 +317,7 @@ export class HomeComponent implements OnInit {
             vote: item.vote_average
           }));
 
-          this.moviesSlider = response.results.map((item: any) => ({
-            link: `/movie/${item.id}`,
-            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
-            title: item.title,
-            rating: item.vote_average * 10,
-            vote: item.vote_average
-          }));
+
 
         } else if (type === 'tvShows') {
           this.tvSlider = response.results.map((item: any) => ({

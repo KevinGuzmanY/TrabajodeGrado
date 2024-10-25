@@ -12,26 +12,22 @@
 <mat-tab-group>
   <mat-tab label="Popular">
     <app-carousel [title]="'Popular'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+                  [items]="popularMovies" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
   <mat-tab label="Contenido Nuevo">
     <app-carousel [title]="'Nuevo'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+                  [items]="newMovies" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
   <mat-tab label="Mejor Calificado">
     <app-carousel [title]="'Mejor Calificado'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                  [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+                  [items]="topRated" [canNavigateLeft]="true" [canNavigateRight]="true">
     </app-carousel>
   </mat-tab>
 </mat-tab-group>
 
-<app-carousel [title]="'Peliculas Populares'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-    [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
-</app-carousel>
-
-<app-slider [data]="topRated"></app-slider>
+<app-slider [data]="slider"></app-slider>
 
 <mat-tab-group>
   <mat-tab label="Elije por Genero">
@@ -45,9 +41,9 @@
       </mat-form-field>
     </div>
 
-      <app-carousel [title]="'Género'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
-                    [items]="filteredGenre" [canNavigateLeft]="true" [canNavigateRight]="true">
-      </app-carousel>
+    <app-carousel [title]="'Género'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+                  [items]="filteredGenre" [canNavigateLeft]="true" [canNavigateRight]="true">
+    </app-carousel>
   </mat-tab>
 
   <mat-tab label="Elije por Tipo">
@@ -65,6 +61,11 @@
     </app-carousel>
   </mat-tab>
 </mat-tab-group>
+
+<app-carousel [title]="'Peliculas Populares'" [isExplore]="false" [exploreLink]="'/movie/category/now_playing'"
+              [items]="moviesSlider" [canNavigateLeft]="true" [canNavigateRight]="true">
+</app-carousel>
+
 
 <app-carousel [title]="'Series Populares'" [isExplore]="false" [exploreLink]="'/tv/category/airing_today'"
     [items]="tvSlider" [canNavigateLeft]="true" [canNavigateRight]="true">

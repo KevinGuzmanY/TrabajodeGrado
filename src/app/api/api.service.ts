@@ -54,13 +54,13 @@ export class ApiService {
 
   getTopRated(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`${this.apiUrl}/${mediaType}/top_rated?&page=${page}`, { params })
+    return this.http.get(`http://localhost:5000/${mediaType}/top_rated?&page=${page}`, { params })
       .pipe(catchError(this.handleError));
   }
 
   getNowPlaying(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`${this.apiUrl}/${mediaType}/now_playing`, { params })
+    return this.http.get(`http://localhost:5000/now_playing/${mediaType}`, { params })
       .pipe(catchError(this.handleError));
   }
 
