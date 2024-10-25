@@ -12,6 +12,7 @@ import { GenreComponent } from './components/genre/genre.component';
 import { SearchComponent } from './components/global/search/search.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import {FavoritosComponent} from "./components/favoritos/favoritos.component";
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'registro',
     component: RegisterComponent
+  },
+  {
+    path: 'favoritos',
+    component: FavoritosComponent
   },
   {
     path: 'login',

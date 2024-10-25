@@ -55,6 +55,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import {ToastrModule} from "ngx-toastr";
+import { FavoritosComponent } from './components/favoritos/favoritos.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import {ToastrModule} from "ngx-toastr";
     SafeUrlPipe,
     RegisterComponent,
     LoginComponent,
+    FavoritosComponent,
   ],
   imports: [
     BrowserModule,

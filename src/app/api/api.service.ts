@@ -14,6 +14,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getUserLikedContent(userId: string): Observable<any> {
+    const url = `http://localhost:5000/user/${userId}/liked_content`;
+    return this.http.get(url);
+  }
+
   getGenres(type: string){
     const arrayDeStrings: string[] = ['uno', 'dos', 'tres'];
     return of(arrayDeStrings);

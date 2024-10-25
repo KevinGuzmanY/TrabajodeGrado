@@ -35,6 +35,13 @@
       </a>
     </li>
 
+    <li>
+      <!--      <a [routerLink]="['/tv']" aria-label="TV Shows">-->
+      <a [routerLink]="['/favoritos']" aria-label="favoritos">
+        <img style="width: 3rem;" src="https://img.icons8.com/?size=100&id=25157&format=png&color=FFFFFF">
+      </a>
+    </li>
+
     <li *ngIf="!loggedIn">
       <!--      <a [routerLink]="['/tv']" aria-label="TV Shows">-->
       <a [routerLink]="['/registro']" aria-label="Registrarse">
