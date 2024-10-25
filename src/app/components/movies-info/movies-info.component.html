@@ -20,6 +20,19 @@
     <div class="spacing">
         <app-media [data]="movie_data" [type]="type" [externalData]="external_data" class="info"></app-media>
     </div>
+  <div style="text-align: center; cursor: pointer">
+    <!-- Icono de Dislike -->
+    <img *ngIf="!liked && !interaccion" (click)="dislikeGenres()" style="width: 7rem; margin-inline: 2rem;" src="https://static-00.iconduck.com/assets.00/dislike-icon-2048x2048-vx04n67c.png">
+    <img *ngIf="!liked && interaccion" (click)="dislikeGenres()" style="width: 7rem; margin-inline: 2rem;" src="https://cdn-icons-png.freepik.com/512/3682/3682331.png">
+    <img *ngIf="liked && interaccion" (click)="dislikeGenres()" style="width: 7rem;" src="https://static-00.iconduck.com/assets.00/dislike-icon-2048x2048-vx04n67c.png">
+
+    <!-- Icono de Like -->
+    <img *ngIf="liked" (click)="likeGenres()" style="width: 8rem;margin-left: 3rem;" src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/blue-like-button-icon.png">
+
+    <!-- Icono de Like (vacío) -->
+    <img *ngIf="!liked && interaccion" (click)="likeGenres()" style="width: 10rem;" src="https://www.freeiconspng.com/thumbs/like-icon-png/white-like-icon-png-20.png">
+    <img *ngIf="!liked && !interaccion" (click)="likeGenres()" style="width: 10rem;" src="https://www.freeiconspng.com/thumbs/like-icon-png/white-like-icon-png-20.png">
+  </div>
 </div>
 
 <div *ngIf="activeTab === 'videos'">

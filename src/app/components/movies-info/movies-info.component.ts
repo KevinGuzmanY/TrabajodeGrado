@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {forkJoin} from "rxjs";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-movies-info',
@@ -21,11 +23,16 @@ export class MoviesInfoComponent implements OnInit {
   recom_data: any[] = [];
   person_data: any;
   type: 'movie' = 'movie';
+  genresString: string = '';
+  userId: string = '';
+  contentId: string = '';
+  liked: boolean = false;
+  interaccion: boolean = false;
 
-
-  constructor(private apiService: ApiService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
+  constructor(private apiService: ApiService, private router: ActivatedRoute, private spinner: NgxSpinnerService,private authService: AuthService) { }
 
   ngOnInit() {
+
     this.router.params.subscribe((params: Params) => {
       this.spinner.show();
       this.id = +params['id'];
@@ -37,6 +44,87 @@ export class MoviesInfoComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 2000);
+
+      this.genresString = localStorage.getItem('movie_data') || '';
+      this.userId = localStorage.getItem('user_id') || '';
+      this.contentId = localStorage.getItem("content_id") || '';
+
+      this.authService.checkLike(this.userId,this.contentId).subscribe(
+        {
+          next: (data)=> {
+            if (data.message == "True")
+              this.liked = true
+            this.interaccion = true
+            console.log(this.liked ,'-',this.interaccion)
+            if (data.message == "False")
+              this.liked = false
+            this.interaccion = true
+            console.log(this.liked,'-',this.interaccion)
+          },error: (err)=>{
+            this.liked = false
+            this.interaccion = false
+            console.log(this.liked,'-',this.interaccion)
+          }
+        }
+      )
+    });
+
+  }
+
+
+  dislikeGenres() {
+    const genresArray = this.genresString ? this.genresString.split(',') : [];
+
+    // Crear un array de observables para cada solicitud
+    const requests = genresArray.map(genre => {
+      console.log(`disLiking genre: ${genre}`);
+      return this.authService.likeGenre(genre, this.userId, this.contentId, "dislike");
+    });
+
+    // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
+    forkJoin(requests).subscribe({
+      next: responses => {
+        console.log('All genres disliked successfully:', responses);
+        // Recargar la página después de que todas las solicitudes hayan terminado
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      error: error => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        console.error('Error disliking genres:', error);
+      }
+    });
+  }
+
+  likeGenres() {
+    const genresArray = this.genresString ? this.genresString.split(',') : [];
+
+    // Crear un array de observables para cada solicitud
+    const requests = genresArray.map(genre => {
+      console.log(`Liking genre: ${genre}`);
+      return this.authService.likeGenre(genre, this.userId, this.contentId, "like");
+    });
+
+    // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
+    forkJoin(requests).subscribe({
+      next: responses => {
+        console.log('All genres liked successfully:', responses);
+        // Recargar la página después de que todas las solicitudes hayan terminado
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      error: error => {
+        setTimeout(() => {
+        }, 1000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        console.error('Error liking genres:', error);
+      }
     });
   }
 
@@ -48,7 +136,7 @@ export class MoviesInfoComponent implements OnInit {
     this.apiService.getMovie(id).subscribe((result: any) => {
       this.movie_data = result;
       this.getWatchProviders(id, 'movie');
-
+      console.log('getMovieInfo')
       // Fetch YouTube trailer video
       this.apiService.getYouTubeVideo(id, 'movie').subscribe(
         (videoRes: any) => {
