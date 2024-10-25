@@ -63,7 +63,13 @@ export class MoviesInfoComponent implements OnInit {
           console.error('Error fetching YouTube video:', videoError);
         }
       );
-
+      // Accessing genres and extracting their names
+      if (this.movie_data.genres && Array.isArray(this.movie_data.genres)) {
+        const genreNames = this.movie_data.genres.map((genre: any) => genre.name);
+        console.log('Genres:', genreNames);
+        localStorage.setItem("movie_data",genreNames)
+        localStorage.setItem("content_id",this.movie_data.id)
+      }
       console.log(this.movie_data)
       this.getExternal(id);
     });

@@ -17,6 +17,25 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  likeGenre(genre: string,user_id: string,content_id: string,action: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'
+    });
+    const body = { genre,user_id,content_id,action };
+    return this.http.post(`${this.apiUrl}/like`,body, { headers });
+  }
+
+  checkLike(userId: string, contentId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true',
+      'Content-Type': 'application/json'
+    });
+
+    const body = { user_id: userId, content_id: contentId };
+
+    return this.http.post(`${this.apiUrl}/check-like`, body, { headers });
+  }
+
   signUp(payload: SignUpPayload) {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'true'
@@ -33,6 +52,14 @@ export class AuthService {
       map(response=>{
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("user_id", String(response.user.user_id));
+        return response;
+      })
+    )
+  }
+
+  like(){
+    return this.http.get<SignInResponsePayload>(`${this.apiUrl}/like`).pipe<SignInResponsePayload>(
+      map(response=>{
         return response;
       })
     )

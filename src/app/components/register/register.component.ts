@@ -90,7 +90,9 @@ export class RegisterComponent {
           self.router.navigate(['/login'], { queryParams: { registered: 'true' } });
         },
         error => {
-          console.error('Error al registrar', error);
+          this.toastr.error(error.error['message'], '!', {
+            positionClass: 'toast-top-right'
+          });
         }
       )
     }
