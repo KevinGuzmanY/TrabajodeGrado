@@ -41,11 +41,14 @@ export class TvInfoComponent implements OnInit {
       this.getMovieCast(this.id);
       this.getTvRecommended(this.id, 1);
 
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2000);
+    });
 
-    this.genresString = localStorage.getItem('movie_data') || '';
-    this.userId = localStorage.getItem('user_id') || '';
-    this.contentId = localStorage.getItem("content_id") || '';
+  }
 
+  checkLikeFuntion(){
     this.authService.checkLike(this.userId,this.contentId).subscribe(
       {
         next: (data)=> {
@@ -64,8 +67,6 @@ export class TvInfoComponent implements OnInit {
         }
       }
     )
-    });
-
   }
 
   setActiveTab(tab: string) {
@@ -138,8 +139,16 @@ export class TvInfoComponent implements OnInit {
         // Extraer los géneros de la respuesta
         const genres = tv_data.genres.map((genre: { id: number, name: string }) => genre.name.toLowerCase());
 
+        localStorage.setItem("content_id",this.tv_data.id)
+
         // Llamar a la función para actualizar los géneros del usuario
         this.updateUserGenres(genres);
+        this.genresString = localStorage.getItem('movie_data') || '';
+        this.userId = localStorage.getItem('user_id') || '';
+        this.contentId = localStorage.getItem("content_id") || '';
+
+        this.checkLikeFuntion();
+
         console.log("getTvInfo")
         console.log(tv_data)
       },

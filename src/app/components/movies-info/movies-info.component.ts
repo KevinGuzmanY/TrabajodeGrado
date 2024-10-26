@@ -44,10 +44,6 @@ export class MoviesInfoComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 2000);
-
-
-
-
     });
 
   }
@@ -161,6 +157,10 @@ export class MoviesInfoComponent implements OnInit {
         const genreNames = this.movie_data.genres.map((genre: any) => genre.name);
         console.log('Genres:', genreNames);
         localStorage.setItem("movie_data",genreNames)
+
+        const genres = this.movie_data.genres.map((genre: { id: number, name: string }) => genre.name.toLowerCase());
+        this.updateUserGenres(genres);
+
         localStorage.setItem("content_id",this.movie_data.id)
 
         this.genresString = localStorage.getItem('movie_data') || '';
@@ -172,6 +172,29 @@ export class MoviesInfoComponent implements OnInit {
       console.log(this.movie_data)
       this.getExternal(id);
     });
+  }
+
+  getCurrentUserId(): number {
+    // Obtén el ID del usuario actual desde tu sistema de autenticación (ej: localStorage, sesión, etc.)
+    return Number(localStorage.getItem('user_id'));
+  }
+
+  updateUserGenres(genres: string[]) {
+    const userId = this.getCurrentUserId();  // Asume que tienes una forma de obtener el user_id
+
+    const data = {
+      user_id: userId,
+      genres: genres
+    };
+
+    this.apiService.updateUserPreferences(data).subscribe(
+      response => {
+        console.log('Preferencias de usuario actualizadas:', response);
+      },
+      error => {
+        console.error('Error al actualizar las preferencias del usuario:', error);
+      }
+    );
   }
 
   getWatchProviders(id: number, media_type: string): void {
