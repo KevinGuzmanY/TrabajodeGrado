@@ -45,35 +45,38 @@ export class MoviesInfoComponent implements OnInit {
         this.spinner.hide();
       }, 2000);
 
-      this.genresString = localStorage.getItem('movie_data') || '';
-      this.userId = localStorage.getItem('user_id') || '';
-      this.contentId = localStorage.getItem("content_id") || '';
 
-      this.authService.checkLike(this.userId,this.contentId).subscribe(
-        {
-          next: (data)=> {
-            if (data.message == "True")
-              this.liked = true
-            this.interaccion = true
-            console.log(this.liked ,'-',this.interaccion)
-            if (data.message == "False")
-              this.liked = false
-            this.interaccion = true
-            console.log(this.liked,'-',this.interaccion)
-          },error: (err)=>{
-            this.liked = false
-            this.interaccion = false
-            console.log(this.liked,'-',this.interaccion)
-          }
-        }
-      )
+
+
     });
 
   }
 
+  checkLikeFuntion(){
+    this.authService.checkLike(this.userId,this.contentId).subscribe(
+      {
+        next: (data)=> {
+          if (data.message == "True")
+            this.liked = true
+          this.interaccion = true
+          console.log(this.liked ,'-',this.interaccion)
+          if (data.message == "False")
+            this.liked = false
+          this.interaccion = true
+          console.log(this.liked,'-',this.interaccion)
+        },error: (err)=>{
+          this.liked = false
+          this.interaccion = false
+          console.log(this.liked,'-',this.interaccion)
+        }
+      }
+    )
+  }
 
   dislikeGenres() {
     const genresArray = this.genresString ? this.genresString.split(',') : [];
+    this.liked = false;
+    this.interaccion = true;
 
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
@@ -102,6 +105,8 @@ export class MoviesInfoComponent implements OnInit {
   likeGenres() {
     const genresArray = this.genresString ? this.genresString.split(',') : [];
 
+    this.liked = true;
+    this.interaccion = true;
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
       console.log(`Liking genre: ${genre}`);
@@ -157,6 +162,12 @@ export class MoviesInfoComponent implements OnInit {
         console.log('Genres:', genreNames);
         localStorage.setItem("movie_data",genreNames)
         localStorage.setItem("content_id",this.movie_data.id)
+
+        this.genresString = localStorage.getItem('movie_data') || '';
+        this.userId = localStorage.getItem('user_id') || '';
+        this.contentId = localStorage.getItem("content_id") || '';
+
+        this.checkLikeFuntion();
       }
       console.log(this.movie_data)
       this.getExternal(id);

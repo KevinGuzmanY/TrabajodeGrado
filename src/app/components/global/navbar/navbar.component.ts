@@ -26,7 +26,7 @@ export class NavbarComponent {
   logOut(){
     this.loggedIn = false
     localStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem('hasReloaded');
+    localStorage.removeItem('hasReloaded');
     window.location.reload();
   }
 

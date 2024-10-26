@@ -62,14 +62,14 @@ export class HomeComponent implements OnInit {
       this.spinner.hide();
     }, 2000);
 
-    this.hasReloaded = sessionStorage.getItem('hasReloaded') || "false";
+    this.hasReloaded = localStorage.getItem('hasReloaded') || "false";
 
     this.activatedRoute.queryParams.subscribe(params => {
       if (params["signedIn"] !== undefined && params["signedIn"] === "true") {
         this.toastr.success("Logueado con éxito");
         // Verifica si la página ya se ha recargado
-        if (!sessionStorage.getItem('hasReloaded')) {
-          sessionStorage.setItem('hasReloaded', 'true'); // Marca que la página ya se recargó
+        if (!localStorage.getItem('hasReloaded')) {
+          localStorage.setItem('hasReloaded', 'true'); // Marca que la página ya se recargó
           location.reload(); // Recarga la página
         }
       }
@@ -243,7 +243,7 @@ export class HomeComponent implements OnInit {
   }
 
   fetchIAContent(): void {
-    if (sessionStorage.getItem("hasReloaded") == "true"){
+    if (localStorage.getItem("hasReloaded") == "true"){
 
       let userid = localStorage.getItem("user_id");
 
