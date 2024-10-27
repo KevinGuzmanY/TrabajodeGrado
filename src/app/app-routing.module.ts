@@ -13,6 +13,7 @@ import { SearchComponent } from './components/global/search/search.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import {FavoritosComponent} from "./components/favoritos/favoritos.component";
+import {NotificacionesComponent} from "./components/notificaciones/notificaciones.component";
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'favoritos',
     component: FavoritosComponent
+  },
+  {
+    path: 'notificaciones',
+    component: NotificacionesComponent
   },
   {
     path: 'login',

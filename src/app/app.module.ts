@@ -56,6 +56,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import {ToastrModule} from "ngx-toastr";
 import { FavoritosComponent } from './components/favoritos/favoritos.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { FavoritosComponent } from './components/favoritos/favoritos.component';
     RegisterComponent,
     LoginComponent,
     FavoritosComponent,
+    NotificacionesComponent,
   ],
   imports: [
     BrowserModule,
