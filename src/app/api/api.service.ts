@@ -11,11 +11,13 @@ export class ApiService {
   private apiKey = 'bbf9e364cea80ea7037b2df19efcad88'; // your API key
   private language = 'es-ES';
 
+  // private backendURL = 'http://localhost:5000'
+  private backendURL = 'https://web-production-5bcb.up.railway.app'
 
   constructor(private http: HttpClient) { }
 
   getUserLikedContent(userId: string): Observable<any> {
-    const url = `http://localhost:5000/user/${userId}/liked_content`;
+    const url = `${this.backendURL}/user/${userId}/liked_content`;
     return this.http.get(url);
   }
 
@@ -25,7 +27,7 @@ export class ApiService {
   }
 
   updateUserPreferences(data: any): Observable<any> {
-    return this.http.post<any>('http://localhost:5000/update_user_preferences', data);
+    return this.http.post<any>(`${this.backendURL}/update_user_preferences`, data);
   }
 
   getContentByTipo(tipo: string){
@@ -48,19 +50,19 @@ export class ApiService {
   getContentByGenre(genre: number){
     let page = 1
       const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`http://localhost:5000/content/genre/${genre}`, { params })
+    return this.http.get(`${this.backendURL}/content/genre/${genre}`, { params })
       .pipe(catchError(this.handleError));
   }
 
   getTopRated(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`http://localhost:5000/${mediaType}/top_rated?&page=${page}`, { params })
+    return this.http.get(`${this.backendURL}/${mediaType}/top_rated?&page=${page}`, { params })
       .pipe(catchError(this.handleError));
   }
 
   getNowPlaying(mediaType: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`http://localhost:5000/now_playing/${mediaType}`, { params })
+    return this.http.get(`${this.backendURL}/now_playing/${mediaType}`, { params })
       .pipe(catchError(this.handleError));
   }
 
@@ -96,13 +98,13 @@ export class ApiService {
   }
 
   getIA(userid: string): Observable<any> {
-    return this.http.get(`http://localhost:5000/recommendations/${userid}`)
+    return this.http.get(`${this.backendURL}/recommendations/${userid}`)
       .pipe(catchError(this.handleError));
   }
 
   getTrending(media: string, page: number): Observable<any> {
     const params = this.buildParams({ page: page.toString() });
-    return this.http.get(`http://localhost:5000/trending/${media}/week`, { params })
+    return this.http.get(`${this.backendURL}/trending/${media}/week`, { params })
       .pipe(catchError(this.handleError));
   }
 

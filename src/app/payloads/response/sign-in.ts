@@ -4,5 +4,6 @@ export interface SignInResponsePayload{
     email?: string;
     username?: string;
     user_id?: string;
+    rol?: string;
   };
 }

@@ -1,1 +1,24 @@
-<p>notificaciones works!</p>
+<div id="margindivnotificaciones">
+</div>
+
+<div class="notificaciones-container">
+  <h1 style="margin-block: 2rem">Notificaciones</h1>
+
+  <!-- Mostrar los mensajes en un div con ancho completo -->
+  <div *ngFor="let mensaje of mensajes" class="mensaje" [class.leido]="mensaje.leido">
+    <h2>{{ mensaje.titulo }}</h2>
+    <p style="font-size: medium;">{{ mensaje.contenido }}</p>
+    <small>{{ mensaje.hora | date:'short' }}</small>
+
+    <div>
+      <!-- Botón para marcar como leído, solo si no está leído -->
+      <button *ngIf="!mensaje.leido" (click)="marcarComoLeido(mensaje.id)">Marcar como leído</button>
+    </div>
+  </div>
+
+  <!-- Formulario para agregar mensaje solo si el rol es admin -->
+  <div *ngIf="userRole === 'admin'" class="mensaje-form">
+    <textarea [(ngModel)]="nuevoMensaje" placeholder="Escribe un mensaje..."></textarea>
+    <button (click)="agregarMensaje()">Guardar Mensaje</button>
+  </div>
+</div>

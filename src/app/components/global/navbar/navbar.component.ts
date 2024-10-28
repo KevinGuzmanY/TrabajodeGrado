@@ -1,5 +1,6 @@
 import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +11,11 @@ export class NavbarComponent {
   searchVisible = false;
   query: string = '';
   loggedIn: boolean = false;
+  notificacionesNoLeidas: number = 0;
 
   @ViewChild('input') inputElement!: ElementRef;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private authService: AuthService) {
     this.searchVisible = true
   }
 
@@ -21,6 +23,17 @@ export class NavbarComponent {
     if (localStorage.getItem("isLoggedIn") == "true"){
       this.loggedIn = true
     }
+
+    let user_id = localStorage.getItem('user_id') || '';
+
+    this.authService.getUserNotifications(user_id).subscribe(
+      (notificaciones) => {
+        this.notificacionesNoLeidas = notificaciones.filter((notificacion: any) => !notificacion.is_read).length;
+      },
+      (error) => {
+        console.error('Error al obtener notificaciones:', error);
+      }
+    );
   }
 
   logOut(){
