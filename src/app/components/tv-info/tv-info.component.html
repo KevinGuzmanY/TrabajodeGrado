@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<div style="text-align: center; cursor: pointer">
+<div *ngIf="loggedIn" style="text-align: center; cursor: pointer">
   <!-- Icono de Dislike -->
   <img *ngIf="!liked && !interaccion" (click)="dislikeGenres()" style="width: 7rem; margin-inline: 2rem;" src="https://static-00.iconduck.com/assets.00/dislike-icon-2048x2048-vx04n67c.png">
   <img *ngIf="!liked && interaccion" (click)="dislikeGenres()" style="width: 7rem; margin-inline: 2rem;" src="https://cdn-icons-png.freepik.com/512/3682/3682331.png">

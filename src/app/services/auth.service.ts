@@ -11,18 +11,18 @@ import {SignInResponsePayload} from "../payloads/response/sign-in";
 })
 export class AuthService {
 
-  //  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://localhost:5000';
   private apiUrl = 'https://web-production-5bcb.up.railway.app';
   private apiKey = 'bbf9e364cea80ea7037b2df19efcad88'; // your API key
   private language = 'en-US';
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  likeGenre(genre: string,user_id: string,content_id: string,action: string): Observable<any> {
+  likeGenre(genre: string,user_id: string,content_id: string,content_type: string,action: string): Observable<any> {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'true'
     });
-    const body = { genre,user_id,content_id,action };
+    const body = { genre,user_id,content_id,action,content_type };
     return this.http.post(`${this.apiUrl}/like`,body, { headers });
   }
 

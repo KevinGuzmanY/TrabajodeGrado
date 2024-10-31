@@ -11,7 +11,7 @@ export class ApiService {
   private apiKey = 'bbf9e364cea80ea7037b2df19efcad88'; // your API key
   private language = 'es-ES';
 
-  // private backendURL = 'http://localhost:5000'
+  //private backendURL = 'http://localhost:5000'
   private backendURL = 'https://web-production-5bcb.up.railway.app'
 
   constructor(private http: HttpClient) { }

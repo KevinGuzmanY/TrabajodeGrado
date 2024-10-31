@@ -28,6 +28,8 @@ export class MoviesInfoComponent implements OnInit {
   contentId: string = '';
   liked: boolean = false;
   interaccion: boolean = false;
+  loggedIn: boolean = false;
+  contentType: string = ''; // "movie" o "tv"
 
   constructor(private apiService: ApiService, private router: ActivatedRoute, private spinner: NgxSpinnerService,private authService: AuthService) { }
 
@@ -45,6 +47,10 @@ export class MoviesInfoComponent implements OnInit {
         this.spinner.hide();
       }, 2000);
     });
+
+    if (localStorage.getItem("isLoggedIn") == "true"){
+      this.loggedIn = true
+    }
 
   }
 
@@ -77,7 +83,7 @@ export class MoviesInfoComponent implements OnInit {
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
       console.log(`disLiking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId, "dislike");
+      return this.authService.likeGenre(genre, this.userId, this.contentId, this.contentType,"dislike");
     });
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
@@ -106,7 +112,7 @@ export class MoviesInfoComponent implements OnInit {
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
       console.log(`Liking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId, "like");
+      return this.authService.likeGenre(genre, this.userId, this.contentId,this.contentType, "like");
     });
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
@@ -168,6 +174,11 @@ export class MoviesInfoComponent implements OnInit {
         this.contentId = localStorage.getItem("content_id") || '';
 
         this.checkLikeFuntion();
+
+        this.router.url.subscribe(urlSegments => {
+          this.contentType = urlSegments[0].path;
+        });
+
       }
       console.log(this.movie_data)
       this.getExternal(id);

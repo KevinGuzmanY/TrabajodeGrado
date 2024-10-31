@@ -75,6 +75,7 @@ export class CarouselComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.updateNavigation();
       }, 300);
     }
+
   }
 
   nextSlide() {

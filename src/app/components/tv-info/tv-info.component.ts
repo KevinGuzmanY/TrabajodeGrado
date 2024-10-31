@@ -29,6 +29,8 @@ export class TvInfoComponent implements OnInit {
   liked: boolean = false;
   interaccion: boolean = false;
   genresString: string = '';
+  loggedIn: boolean = false;
+  contentType: string = ''; // "movie" o "tv"
 
   constructor(private apiService: ApiService,private authService: AuthService, private router: ActivatedRoute, private spinner: NgxSpinnerService) {}
 
@@ -46,6 +48,9 @@ export class TvInfoComponent implements OnInit {
       }, 2000);
     });
 
+    if (localStorage.getItem("isLoggedIn") == "true"){
+      this.loggedIn = true
+    }
   }
 
   checkLikeFuntion(){
@@ -80,7 +85,7 @@ export class TvInfoComponent implements OnInit {
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
       console.log(`disLiking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId, "dislike");
+      return this.authService.likeGenre(genre, this.userId, this.contentId,this.contentType, "dislike");
     });
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
@@ -107,7 +112,7 @@ export class TvInfoComponent implements OnInit {
     // Crear un array de observables para cada solicitud
     const requests = genresArray.map(genre => {
       console.log(`Liking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId, "like");
+      return this.authService.likeGenre(genre, this.userId, this.contentId,this.contentType, "like");
     });
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
@@ -149,8 +154,10 @@ export class TvInfoComponent implements OnInit {
 
         this.checkLikeFuntion();
 
-        console.log("getTvInfo")
-        console.log(tv_data)
+        this.router.url.subscribe(urlSegments => {
+          this.contentType = urlSegments[0].path;
+        });
+
       },
       error => {
         console.error('Error fetching TV show details:', error);
