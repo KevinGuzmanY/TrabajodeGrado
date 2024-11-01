@@ -25,14 +25,23 @@ export class FavoritosComponent {
         const uniqueMovies = new Set();
         console.log('favoritos '+res)
         this.movies_data = res
-          .map((item: any) => ({
-            id: item.id, // añade el campo id para filtrar duplicados
-            link: `/movie/${item.id}`,
-            imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
-            title: item.title || item.name,
-            rating: item.vote_average * 10,
-            vote: item.vote_average
-          }))
+          .map((item: any) => {
+            // Verifica el content_type y cambia el link en consecuencia
+            const link = item.content_type === 'movie'
+              ? `/movie/${item.id}`
+              : item.content_type === 'tv'
+                ? `/tv/${item.id}`
+                : null; // Añade una opción predeterminada si es necesario
+
+            return {
+              id: item.id, // añade el campo id para filtrar duplicados
+              link: link,
+              imgSrc: item.poster_path ? `https://image.tmdb.org/t/p/w370_and_h556_bestv2${item.poster_path}` : null,
+              title: item.title || item.name,
+              rating: item.vote_average * 10,
+              vote: item.vote_average
+            };
+          })
           .filter((movie: any) => {
             const isDuplicate = uniqueMovies.has(movie.id);
             uniqueMovies.add(movie.id);
