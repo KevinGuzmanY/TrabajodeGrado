@@ -82,14 +82,12 @@ export class TvInfoComponent implements OnInit {
   dislikeGenres() {
     const genresArray = this.genresString ? this.genresString.split(',') : [];
 
-    // Crear un array de observables para cada solicitud
-    const requests = genresArray.map(genre => {
-      console.log(`disLiking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId,this.contentType, "dislike");
-    });
+    console.log(`disLiking`);
+
+    const request = this.authService.likeGenre(genresArray[0], this.userId, this.contentId,this.contentType, "dislike");
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
-    forkJoin(requests).subscribe({
+    forkJoin(request).subscribe({
       next: responses => {
         console.log('All genres disliked successfully:', responses);
         // Recargar la página después de que todas las solicitudes hayan terminado
@@ -109,14 +107,13 @@ export class TvInfoComponent implements OnInit {
   likeGenres() {
     const genresArray = this.genresString ? this.genresString.split(',') : [];
 
-    // Crear un array de observables para cada solicitud
-    const requests = genresArray.map(genre => {
-      console.log(`Liking genre: ${genre}`);
-      return this.authService.likeGenre(genre, this.userId, this.contentId,this.contentType, "like");
-    });
+    this.updateUserGenres(genresArray);
+    console.log(`Liking`);
+
+    const request = this.authService.likeGenre(genresArray[0], this.userId, this.contentId,this.contentType, "like");
 
     // Usar forkJoin para ejecutar todas las solicitudes en paralelo y esperar a que terminen
-    forkJoin(requests).subscribe({
+    forkJoin(request).subscribe({
       next: responses => {
         console.log('All genres liked successfully:', responses);
         // Recargar la página después de que todas las solicitudes hayan terminado
@@ -126,9 +123,9 @@ export class TvInfoComponent implements OnInit {
       },
       error: error => {
         setTimeout(() => {
+          window.location.reload();
         }, 1000);
         setTimeout(() => {
-          window.location.reload();
         }, 1000);
         console.error('Error liking genres:', error);
       }
