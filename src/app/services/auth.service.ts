@@ -11,8 +11,8 @@ import {SignInResponsePayload} from "../payloads/response/sign-in";
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:5000';
-  //private apiUrl = 'https://web-production-5bcb.up.railway.app';
+  //private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'https://web-production-5bcb.up.railway.app';
   private apiKey = 'bbf9e364cea80ea7037b2df19efcad88'; // your API key
   private language = 'en-US';
 
